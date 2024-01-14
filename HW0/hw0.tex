@@ -1,0 +1,158 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage[all]{xy}
+\usepackage{epstopdf}
+\usepackage{hyperref}
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+
+% these packages make it easy to include figures in the text. 
+\usepackage{float}
+\restylefloat{figure}
+
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cF}{\mathcal{F}}
+
+
+
+
+\begin{document}
+{\Large Name: Eyasu Nigussie}  \\
+\begin{center}
+\Large AMATH 515 \hskip 2in Homework Set 0\\
+{\bf Due:  Wednesday, January 10th, by 11 pm}. 
+\end{center}
+
+\bigskip
+
+
+\section{Theory}
+\begin{enumerate}
+	\item Submit your write-up to Gradescope. Look for the assignment "Homework 0 -- theory".
+
+\item {\bf Calculus primer}. For a function $f:\mathbb{R}^n \rightarrow \mathbb{R}$, we define the 
+{\it gradient} to be the vector of partial derivatives: 
+\[
+\nabla f(x) = \begin{bmatrix} \frac{\partial f}{\partial x_1} \\ \vdots \\ \frac{\partial f}{\partial x_n}\end{bmatrix}
+\]
+and the {\it Hessian} to be the matrix of second partial derivatives: 
+\[
+\nabla^2 f(x) = 
+\begin{bmatrix} \frac{\partial^2 f}{\partial x_1 \partial x_1}  & \dots & \frac{\partial^2 f}{\partial x_1 \partial x_n}
+\\ \vdots 
+\\ \frac{\partial^2 f}{\partial x_n \partial x_1} & \dots & \frac{\partial^2 f}{\partial x_n \partial x_n}\end{bmatrix}
+\]
+Compute the gradients and hessians of the following functions, with $x \in \mathbb{R}^4$ in all three examples. 
+\begin{enumerate}
+\item $f(x) = \sin(x_1 + x_2 + x_3 + x_4)$ \\ 
+\[
+\nabla f(x)= 
+ \begin{bmatrix} \cos(x_1+x_2+x_3+x_4) \\ \cos(x_1+x_2+x_3+x_4) \\ \cos(x_1+x_2+x_3+x_4) \\ \cos(x_1+x_2+x_3+x_4)\end{bmatrix}
+\] 
+\[
+\nabla^2 f(x) =
+- \begin{bmatrix} \sin(x)\, \sin(x)\, \sin(x)\, \sin(x) \\
+                  \sin(x)\, \sin(x)\, \sin(x)\, \sin(x) \\
+                  \sin(x)\, \sin(x)\, \sin(x)\, \sin(x) \\
+                  \sin(x)\, \sin(x)\, \sin(x)\, \sin(x) \\               
+    \end{bmatrix}
+\]
+
+\item $f(x) = \|x\|^2 = x_1^2 + x_2^2 + x_3^2 + x_4^2$\\
+\[
+\nabla f(x) = 2
+\begin{bmatrix}
+    x_1 \\ x_2 \\ x_3 \\ x_4
+\end{bmatrix}
+\]
+\[
+\nabla^2 f(x) = 2
+\begin{bmatrix}
+    1\quad 0\quad 0\quad 0 \\
+    0\quad 1\quad 0\quad 0 \\
+    0\quad 0\quad 1\quad 0 \\
+    0\quad 0\quad 0\quad 1 \\
+\end{bmatrix}
+=2I_4
+\] 
+
+\item $f(x) = \ln(x_1x_2x_3x_4)$.  
+\[
+\nabla f(x) = 
+\begin{bmatrix}
+    \frac{1}{x_1} \\
+    \frac{1}{x_2} \\
+    \frac{1}{x_3} \\
+    \frac{1}{x_4} 
+\end{bmatrix}
+\]
+\[
+\nabla^2 f(x) = -
+\begin{bmatrix}
+    \frac{1}{x_1^2}\quad 0\quad 0\quad 0 \\
+    0\quad \frac{1}{x_2^2}\quad 0\quad 0 \\
+    0\quad 0\quad \frac{1}{x_3^2}\quad 0 \\ 
+    0\quad 0\quad 0\quad \frac{1}{x_4^2} \\
+\end{bmatrix}
+\]
+\end{enumerate}
+
+\newpage
+
+\item {\bf Linear algebra primer.}
+\begin{enumerate}
+\item What are the eigenvalues of the following matrix: 
+\[
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+\pi & 2 & 0 & 0 \\
+64 & -15 & 3 & 0 \\ 
+321 & 0 & 0 & 5 
+\end{bmatrix}
+\]
+$\lambda = \{1,2,3,5\}$ \\
+\item Write down bases for the range and nullspace of the following matrix, written as the outer product of two vectors: 
+\[
+A = \begin{bmatrix}
+1 \\ 0 \\ 1
+\end{bmatrix} 
+\begin{bmatrix}
+1 & 1 & 1
+\end{bmatrix} 
+\]
+Base for the range = $\left\{ \begin{bmatrix} 1 \\ 0 \\ 1\end{bmatrix}\right\}$ \\
+\bigbreak
+Basis for nullspace = $\left\{ \begin{bmatrix} -1 \\ 1 \\ 0\end{bmatrix}, \begin{bmatrix} -1 \\0 \\1 \end{bmatrix}\right\}$
+\item Let $A$ be a $10 \times 5$ matrix, and $b$ a vector in $\mathbb{R}^{10}$.  The notation $A^T$ denotes the {\it transpose} of $A$, where the columns of $A$ are rows of $A^T$. 
+\begin{itemize}
+\item What is the size of $A^TA$? What is the size of $A^Tb$? \\
+The size of A and B is $5 \times 5$ and $5 \times 1$ respectively. 
+\item How many solutions might there be to the system $Ax = b$? \\
+Since the system is over-determined, it could have no solution or a unique solution depending on the linear combination of the equations.
+\item How many solutions might there be to the system $A^TA x = A^T b$? \\
+It will have a unique solution if $A^TA$ is invertible. If not, it could have no solution or infinitely many solutions. 
+\item Suppose the columns of $A$ are linearly independent. How many solutions might there be to the system $Ax=b$? To the system $A^TAx = A^Tb$? \\
+$Ax=b$ will have a unique solution if $b \in col A.$ The system $A^TAx = A^Tb$ will have a unique solution.
+\end{itemize}
+
+
+
+
+\end{enumerate} 
+
+
+
+\end{enumerate}
+
+\bigskip \bigskip
+
+
+\end{document}  
+
