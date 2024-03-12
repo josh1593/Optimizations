@@ -1,0 +1,303 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry}
+               % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage[all]{xy}
+\usepackage{epstopdf}
+\usepackage{color}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+
+% these packages make it easy to include figures in the text. 
+\usepackage{float}
+\restylefloat{figure}
+% newcommand
+\newcommand{\ip}[1]{\left\langle #1\right\rangle}
+
+
+
+\begin{document}
+{\Large Name:}  \\
+\begin{center}
+\Large AMATH 515 \hskip 2in Homework Set 3\\
+{\bf Due: Wednesday, Feb 28 by midnight.}
+\end{center}
+\bigskip
+
+Let $f$ be a closed proper convex function. The convex conjugate of $f$, called $f^*$, is defined by 
+\[
+f^*(z) = \sup_x \left\{ z^Tx - f(x)\right\}.
+\]
+
+
+\begin{enumerate}
+
+
+
+\item  Compute the conjugates of the following functions.  
+\begin{enumerate}
+\item $f(x) = \delta_{\mathbb{B}_{\infty}}(x)$.
+\item $f(x) = \delta_{\mathbb{B}_{2}}(x)$.
+\item $f(x) = \exp(x)$.
+\item $f(x) =  \log(1+\exp(x))$
+\item $f(x) = x\log(x)$
+\end{enumerate}
+
+
+\bigskip\bigskip
+
+
+
+\item  Let $g$ be any convex function; $f$ is formed using $g$.
+Compute $f^*$ in terms of $g^*$.  
+\begin{enumerate}
+\item $f(x) = \lambda g(x)$.
+\item $f(x) = g(x-a) + \langle x, b \rangle$.
+\item $f(x) = \inf_z \left\{g(x,z)\right\}$. 
+\item $f(x) = \inf_z \left\{\frac{1}{2}\|x-z\|^2 + g(z)\right\}$
+\end{enumerate}
+
+\bigskip\bigskip
+
+\item Moreau Identities.
+\begin{enumerate}
+\item  Derive the Moreau Identity: 
+\[
+\mbox{prox}_{f}(z) + \mbox{prox}_{f^*}(z) = z. 
+\]
+
+
+\bigskip \bigskip
+
+%\item Take a look at this more detailed identity:  
+%\[
+%\mbox{prox}_{\alpha f}(z) = z - \alpha \mbox{prox}_{\frac{1}{\alpha}f^*}(z/\alpha).
+%\]
+%Don't prove this, but please remember it --- its very useful for coding. 
+
+\bigskip \bigskip
+
+\item Use the Moreau identity and 1a, 1b to check your formulas for 
+\[
+\mbox{prox}_{\|\cdot\|_1}, \quad \mbox{prox}_{\|\cdot\|_2}
+\]
+from last week's homework. 
+\end{enumerate}
+
+\newpage
+
+%\item Consider the following linear program: 
+%\[
+%\min_x c^Tx \quad \mbox{s.t.} \quad Ax \leq b, \quad x \geq 0.
+%\] 
+%Derive the dual problem we get from the perturbation 
+%\[
+%p(u) = \min_{x} c^Tx \quad \mbox{s.t.} \quad Ax \leq b + u, \quad x \geq 0.
+%\]
+
+%\bigskip\bigskip\bigskip
+
+%\item{Duals of Lasso Formulations}
+%
+%\begin{enumerate}
+%
+%\item Compute the dual of  the constrained Lasso problem
+%\[
+%\min_{x} \frac{1}{2}\|b - Ax\|^2 \quad \mbox {s.t.} \quad \|x\|_1 \leq \tau. 
+%\]
+%obtained from the perturbation 
+%\[
+%p(u) = \min_{x} \frac{1}{2}\|b - Ax + u\|^2 \quad \mbox {s.t.} \quad \|x\|_1 \leq \tau. 
+%\]
+%
+%\bigskip\bigskip
+%
+%\item Compute the dual for the modified problem  
+%\[
+%\min_{x} \|b - Ax\|_2 +\lambda \|x\|_1. 
+%\]
+%obtained from perturbation 
+%\[
+%p(u) = \min_{x} \|b - Ax + u\|_2 +\lambda \|x\|_1. 
+%\]
+%
+%
+%\end{enumerate}
+%
+%\bigskip\bigskip\bigskip
+
+\item Duals of regularized GLM. Consider the Generalized Linear Model family: 
+\[
+\min_{x} \sum_{i=1}^n g(\langle a_i, x\rangle) - b^TAx + R(x),
+\]
+Where $g$ is convex and $R$ is any regularizer. 
+\begin{enumerate}
+\item Write down the dual obtained by dualizing $g$.
+\bigskip\bigskip
+\item Specify your formula to Ridge-regularized logistic regression: 
+\[
+\min_x \sum_{i=1}^n \log(1+\exp(\langle a_i, x \rangle))  - b^TAx  + \frac{\lambda}{2}\|x\|^2. 
+\]
+\bigskip\bigskip
+\item Specify your formula to 1-norm regularized Poisson regression: 
+\[
+\min_x \sum_{i=1}^n \exp(\langle a_i, x \rangle) - b^TAx +  \lambda\|x\|_1. 
+\]
+\end{enumerate}
+\bigskip \bigskip
+\end{enumerate}
+\noindent{\bf Coding Assignment}
+\vskip 8pt
+Please download \texttt{515Hw3\_Coding.ipynb} and \texttt{proxes.py} to complete problem (5).
+
+\vskip 16pt
+\begin{enumerate}
+\item[(5)] In this problem you will write a routine to project onto the capped simplex. 
+
+The Capped Simplex $\Delta_k$ is defined as follows: 
+\[
+\Delta_k := \left\{x: 1^Tx = k, \quad 0 \leq x_i \leq 1 \quad \forall i. \right\}
+\]
+This is the intersection of the $k$-simplex with the unit box. 
+
+The projection problem is given by 
+\[
+\mbox{proj}_{\Delta_k}(z) = \arg\min_{x \in \Delta_k} \frac{1}{2}\|x-z\|^2.
+\]
+\begin{enumerate}
+\item Derive the (1-dimensional) dual problem by focusing on the $1^Tx = k$ constraint. 
+\bigskip \bigskip
+\item Implement a routine to solve this dual. It's a scalar root finding problem, 
+so you can use the root-finding algorithm provided in the code.  
+\bigskip \bigskip
+\item Using the dual solution, write down a closed form formula for the projection.  
+Use this formula, along with your dual solver, to implement the projection. You can use the unit test 
+provided to check if your code id working correctly. 
+
+\end{enumerate}
+
+\item[(6)] In this problem you will learn to apply proximal operators to matrices to perform matrix completion. You'll find that you can recover most of the information in a low rank matrix despite only seeing a small percentage of the entries. At the end of this problem, you'll see something that is, in my opinion, \textbf{truly remarkable}. 
+
+Consider a matrix $X$, (for example, where it is a matrix of ratings, and $X_{i,j}$ is the rating that user i gave to item j). However, you only observed the entries $(i,j)\in \Omega$ where $\Omega$ is a subset of the entries $\left\{(i,j) \right\}_{i,j=1}^n$. In order to solve this, we assume that the matrix $X$ is low rank, and we will use this prior knowledge to try and recover it. Similar to how the lasso or $\ell_1$ penalty promotes sparsity in regression, the nuclear norm $\| \cdot \|_*$ promotes low rank matrices.\footnote{One interpretation of this assumption is that a low rank model is equivalent to a latent factor model with low dimensional latent factors. Assume that X is rank d. This is like saying that $X_{i,j}=\left<u_i,v_j\right>$ for some set of vectors $\{u_i\}$ representing the rows (or users), and $\{v_j\}$, representing the columns (or items), with $u,v\in \mathbb{R}^d$} We will implement and experiment with a handful of approaches to the matrix completion problem. 
+
+\begin{enumerate}
+\item First, we will prove a general result that will help us compute proximal operators of functions of the singular values of a matrix. 
+
+\global\long\def\tr{\text{tr}}%
+
+Consider the optimization problem we have when trying to compute a proximal operator. 
+
+\[
+\arg\min_{X}\frac{1}{2}\|X-Y\|_{F}^{2}+G(X)
+\]
+
+where the Frobenius norm is defined as 
+\[
+\|A\|_{F}^{2}=\tr\left(A^{T}A\right)
+\]
+and where we assume that $G(X)$ depends only on the singular values of $X$, meaning $G(X)=g\left(\sigma_{1}\left(X\right),...,\sigma_{n}(X)\right)$. Assume that $X,Y$ are $n\times n$ real matrices.\footnote{All of the same computations essentially hold if $X,Y$ are rectangular matrices of the same shape, you just have to be a little careful with matching up the dimensions, and the Von Neumann trace inequality is generally stated only for square matrices}
+
+We'll solve this in two stages. First, we'll assume that $X$ has
+singular values $\sigma_{1},...,\sigma_{n}$, and optimize over those
+such matrices. Then we'll optimize over the choice of singular values.
+That is, we're creating a nested optimization problem. Let $\vec{\sigma}=\left(\sigma_{1},...,\sigma_{n}\right)$
+\[
+\min_{\vec{\sigma}}\begin{cases}
+\min_{X}\frac{1}{2}\|X-Y\|_{F}^{2}+g\left(\sigma_{1}\left(X\right),...,\sigma_{n}(X)\right)\\
+\text{subject to}\ \sigma_{i}\left(X\right)=\sigma_{i},i=1,...,n
+\end{cases}
+\]
+
+First, to solve the inner problem, 
+
+\[
+\min_{X}\frac{1}{2}\|X-Y\|_{F}^{2}+g\left(\sigma_{1}\left(X\right),...,\sigma_{n}(X)\right)
+\]
+\[
+\text{subject to}\ \sigma_{i}\left(X\right)=\sigma_{i},i=1,...,n
+\]
+
+Notice that $g$ drops out after adding the constraints on $\sigma_{i}$.
+\textbf{Use the Von Neumann trace inequality to show that}
+\[
+\min_{X,\sigma_{i}\left(X\right)=\sigma_{i}}\frac{1}{2}\|X-Y\|_{F}^{2}=\frac{1}{2}\sum_{i=1}^{n}\left(\sigma_{i}-\sigma_{i}(Y)\right)^{2}
+\]
+
+and that the minimum is achieved with a matrix $X$ that has the same
+\textbf{singular vectors} as $Y$. That is, \textbf{given the singular
+value decomposition of $Y$, $Y=U\Sigma V^{*},$ write down an expression
+for $X$. }
+
+Finally, conclude that 
+\[
+\min_{X,\sigma_{i}\left(X\right)=\sigma_{i}}\frac{1}{2}\|X-Y\|_{F}^{2}+g\left(\sigma_{1}\left(X\right),...,\sigma_{n}(X)\right)=\frac{1}{2}\sum_{i=1}^{n}\left(\sigma_{i}-\sigma_{i}(Y)\right)^{2}+g\left(\sigma_{1},...,\sigma_{n}\right)
+\]
+and write down an expression for 
+\[
+\arg\min_{X}\frac{1}{2t}\|X-Y\|_{F}^{2}+G(X)
+\]
+in terms of $\textrm{prox}_{tg}$
+
+
+\item One natural approach to setting up an optimization problem that models this situation is to assume that $Y$ is rank $k$, and try approximate it with our own rank $k$ matrix, solving the optimization problem 
+
+\begin{equation}
+\textrm{minimize  } \| P\odot(X-Y)\|_F^2
+\end{equation}
+\[
+\textrm{subject to  } \textrm{rank}(X)\leq k
+\]
+where $\odot$ denotes the elementwise product, and P is a matrix with $P_{i,j}=1$ when $(i,j)\in\Omega$ and 0 if $(i,j)\not\in\Omega$ (essentially a matrix of which entries are observed). \textbf{Is this problem convex? Why or why not?}
+
+\item We relax the constraint above into a nuclear norm constraint
+\[
+\textrm{minimize  } \| P\odot(X-Y)\|_F^2
+\]
+\[
+\textrm{subject to  } \|X\|_*\leq K
+\]
+where the nuclear norm is given by
+\[
+\|X\|_* = \sum_{i=1}^n \sigma_i(X)
+\]
+\textbf{Is this problem convex? Why or why not?} Rather than the problem above, we'll work with a penalized version,
+\begin{equation}
+\textrm{minimize  } \| P\odot(Y-X)\|_F^2 + \lambda \|X\|_*
+\end{equation}
+This approach is known as soft-impute in the literature.
+
+
+\item Derive formulas for the following proximal and projection operators using the formulas you worked out above.
+\[
+\textrm{prox}_{t\|\cdot\|_*}(Y)=\arg \min_M \frac{1}{2t}\|Y-M\|_F^2 + \|M\|_*
+\]
+
+\[
+\textrm{proj}_{\textrm{rank}_k}(Y)=\arg \min_{\textrm{rank}(M)\leq k} \frac{1}{2}\|Y-M\|_F^2
+\]
+
+\[
+\textrm{proj}_{*K}(Y)=\arg \min_{\|Y\|_*\leq K} \frac{1}{2}\|Y-M\|_F^2
+\]
+For the third one, you may write the answer in terms of an $\ell_1$ ball projection
+\[
+\textrm{proj}_{\ell_1\leq R}(x)=\arg\min_{\|y\|_1\leq R} \frac{1}{2}\|x-y\|_F^2
+\]
+
+
+\item Suppose we want to solve the optimization problem in (b) for many values of $\lambda$ to give ourselves the best chance of finding a good recovery (performing some kind of cross validation or scoring to pick the best one. In the coding section, we'll just compare the true reconstruction error $\|X-Y\|_F^2$ for simplicity in order to understand how changing the regularization parameter changes the performance of the model. This data wouldn't be available in practice since we only observe $P\odot X$ but there are ways to approximate that quantity. However, as you'll see, even for small examples, this problem can be somewhat time consuming. \textbf{What could we do to speed this up knowing that we're solving many similar problems? Do you expect a larger value of $\lambda$ to make the problem converge faster or slower?} 
+
+\item Suppose that rather than knowing the observed entries of X exactly, there were some large corrupted entries. \textbf{What could we change to make our problem robust to such corruptions?}
+
+\item Fill in Problem 6 in the jupyter notebook, the nuclear norm and rank projection in proxes.py
+
+\end{enumerate}
+There are a couple of other tricks to make this scalable to real world big data sets which we're not making you do in this class. The biggest speed up would come from using a "partial" or "truncated" SVD at each step since we only care about the top components, along the lines of the algorithm in https://arxiv.org/pdf/1607.03463.pdf. Additionally, because they apply an iterative algorithm, you can both warm start the SVD itself with the previous SVD, and stop computing additional components once you know they will be "proxed" down to zero (either with the nonconvex projection or with nuclear norm prox).
+\end{enumerate}
+
+
+\end{document}  
